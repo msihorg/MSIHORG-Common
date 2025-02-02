@@ -1,6 +1,7 @@
 // BlazorTemplate.API\Controllers\BaseApiController.cs
 
 using Microsoft.AspNetCore.Mvc;
+using MSIHORG.Common.Shared.Models.Responses;
 
 namespace MSIHORG.Common.Server.Webapi.Controllers
 {
