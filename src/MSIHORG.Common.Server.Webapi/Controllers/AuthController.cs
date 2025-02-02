@@ -1,7 +1,4 @@
 // BlazorTemplate.API\Controllers\AuthController.cs
-using BlazorTemplate.Core.Interfaces.Services;
-using BlazorTemplate.Shared.Web.Common;
-using BlazorTemplate.Shared.Web.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MSIHORG.Common.Server.Webapi.Controllers
