@@ -10,4 +10,10 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\msihorg.common.server.core\msihorg.common.server.core.csproj" />
+    <ProjectReference Include="..\msihorg.common.server.infrastructure\msihorg.common.server.infrastructure.csproj" />
+    <ProjectReference Include="..\msihorg.common.shared\msihorg.common.shared.csproj" />
+  </ItemGroup>
+
 </Project>
