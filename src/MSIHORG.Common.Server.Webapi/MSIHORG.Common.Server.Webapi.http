@@ -1,0 +1,6 @@
+@MSIHORG.Common.Server.Webapi_HostAddress = http://localhost:5042
+
+GET {{MSIHORG.Common.Server.Webapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
