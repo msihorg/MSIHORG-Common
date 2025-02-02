@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MSIHORG.Common.Shared\MSIHORG.Common.Shared.csproj" />
+    <ProjectReference Include="..\msihorg.common.server.core\msihorg.common.server.core.csproj" />
+    <ProjectReference Include="..\msihorg.common.server.infrastructure\msihorg.common.server.infrastructure.csproj" />
+    <ProjectReference Include="..\msihorg.common.shared\msihorg.common.shared.csproj" />
   </ItemGroup>
 
 </Project>
