@@ -3,8 +3,8 @@ using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using MSIHORG.Common.Server.Core.Services;
-using MSIHORG.Common.Server.Infrastructure.Services.Settings;
 using MSIHORG.Common.Shared.Models.DTOs;
+using MSIHORG.Common.Server.Infrastructure.Settings;
 
 namespace MSIHORG.Common.Server.Infrastructure.Services.Email
 {
