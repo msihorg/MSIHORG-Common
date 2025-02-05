@@ -1,0 +1,103 @@
+@* BlazorTemplate.Web\Components\Pages\Auth\VerifyLogin.razor *@
+@page "/auth/verify"
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+@inject IAuthApiService AuthService
+@inject IToastService ToastService
+@inject AuthenticationStateProvider AuthStateProvider
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        @if (isLoading)
+        {
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p class="mt-2 text-sm text-gray-600">
+                    Verifying your login...
+                </p>
+            </div>
+        }
+        else if (error != null)
+        {
+            <div class="rounded-md bg-red-50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <XCircleIcon class="h-5 w-5 text-red-400" />
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800">
+                            Verification Failed
+                        </h3>
+                        <div class="mt-2 text-sm text-red-700">
+                            <p>@error</p>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex space-x-3">
+                                <button type="button"
+                                        @onclick="NavigateToLogin"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                    Try Again
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool isLoading = true;
+    private string? error;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Token { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(Token))
+        {
+            error = "Invalid login link.";
+            isLoading = false;
+            return;
+        }
+
+        try
+        {
+            var result = await AuthService.ValidateLoginTokenAsync(Token);
+            
+            if (result.IsSuccess && result.Value != null)
+            {
+                // Update auth state with the new token
+                if (AuthStateProvider is CustomAuthStateProvider customAuthProvider)
+                {
+                    await customAuthProvider.UpdateAuthenticationState(result.Value);
+                }
+
+                // Redirect to dashboard or home page
+                NavigationManager.NavigateTo("/", true);
+            }
+            else
+            {
+                error = result.Error ?? "Invalid or expired login link.";
+            }
+        }
+        catch (Exception ex)
+        {
+            error = "An error occurred while verifying your login.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToLogin()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+}

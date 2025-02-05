@@ -1,0 +1,72 @@
+@* BlazorTemplate.Web\Components\Pages\Auth\Logout.razor *@
+// BlazorTemplate.Web/Components/Pages/Auth/Logout.razor
+@page "/logout"
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            if (AuthStateProvider is CustomAuthStateProvider authStateProvider)
+            {
+                await authStateProvider.LogoutAsync();
+                ToastService.ShowSuccess("You have been successfully logged out.");
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError("An error occurred during logout.");
+        }
+
+        NavigationManager.NavigateTo("/login", true);
+    }
+}
+
+// BlazorTemplate.Web/Components/Shared/LogoutButton.razor
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
+
+<button @onclick="HandleLogout" class="@CssClass">
+    <span class="flex items-center">
+        @if (ShowIcon)
+        {
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+        }
+        @Text
+    </span>
+</button>
+
+@code {
+    [Parameter]
+    public string Text { get; set; } = "Logout";
+
+    [Parameter]
+    public string CssClass { get; set; } = "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500";
+
+    [Parameter]
+    public bool ShowIcon { get; set; } = true;
+
+    private async Task HandleLogout()
+    {
+        try
+        {
+            if (AuthStateProvider is CustomAuthStateProvider authStateProvider)
+            {
+                await authStateProvider.LogoutAsync();
+                ToastService.ShowSuccess("You have been successfully logged out.");
+                NavigationManager.NavigateTo("/login", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError("An error occurred during logout.");
+        }
+    }
+}
