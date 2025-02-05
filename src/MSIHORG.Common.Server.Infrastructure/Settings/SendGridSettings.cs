@@ -1,4 +1,4 @@
-﻿namespace MSIHORG.Common.Server.Infrastructure.Services.Settings
+﻿namespace MSIHORG.Common.Server.Infrastructure.Settings
 {
     public class SendGridSettings
     {

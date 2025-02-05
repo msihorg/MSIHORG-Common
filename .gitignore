@@ -105,3 +105,6 @@ UpgradeLog*.htm
 # Cake - Uncomment if you are using it
 # tools/**
 # !tools/packages.config
+/src/MSIHORG.Common.Server.Infrastructure/appsettings.Development.json
+/src/MSIHORG.Common.Server.Infrastructure/appsettings.Production.json
+/src/MSIHORG.Common.Server.Infrastructure/appsettings.Staging.json
