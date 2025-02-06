@@ -1,3 +1,5 @@
+using MSIHORG.Common.Server.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,6 +11,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add core services
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
