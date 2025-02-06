@@ -28,7 +28,7 @@ namespace MSIHORG.Common.Server.Infrastructure.Services.Email
             {
                 var msg = new SendGridMessage
                 {
-                    From = new EmailAddress(emailMessage.From ?? _settings.DefaultFromEmail, _settings.DefaultFromName),
+                    From = new EmailAddress(emailMessage.From ?? _settings.FromEmail, _settings.FromName),
                     Subject = emailMessage.Subject,
                     HtmlContent = emailMessage.Body
                 };
@@ -56,7 +56,7 @@ namespace MSIHORG.Common.Server.Infrastructure.Services.Email
             {
                 var msg = new SendGridMessage
                 {
-                    From = new EmailAddress(_settings.DefaultFromEmail, _settings.DefaultFromName),
+                    From = new EmailAddress(_settings.FromEmail, _settings.FromName),
                     TemplateId = templateId
                 };
 
@@ -91,7 +91,7 @@ namespace MSIHORG.Common.Server.Infrastructure.Services.Email
                 {
                     var msg = new SendGridMessage
                     {
-                        From = new EmailAddress(_settings.DefaultFromEmail, _settings.DefaultFromName),
+                        From = new EmailAddress(_settings.FromEmail, _settings.FromName),
                         Subject = subject,
                         HtmlContent = body
                     };
@@ -124,7 +124,7 @@ namespace MSIHORG.Common.Server.Infrastructure.Services.Email
             {
                 var msg = new SendGridMessage
                 {
-                    From = new EmailAddress(_settings.DefaultFromEmail, _settings.DefaultFromName),
+                    From = new EmailAddress(_settings.FromEmail, _settings.FromName),
                     Subject = subject,
                     HtmlContent = body
                 };
