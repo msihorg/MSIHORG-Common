@@ -10,4 +10,8 @@
     <ProjectReference Include="..\MSIHORG.Common.Shared\MSIHORG.Common.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>
