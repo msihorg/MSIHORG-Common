@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSIHORG.Common.Shared.Models.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace MSIHORG.Common.Server.Core.Entities
 {
     public class Role
     {
+        private readonly HashSet<UserRole> _userRoles = new();
+
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
@@ -15,6 +18,37 @@ namespace MSIHORG.Common.Server.Core.Entities
         public DateTime? LastModifiedAt { get; set; }
 
         // Navigation property
-        public virtual ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
+        public virtual IReadOnlyCollection<UserRole> UserRoles => _userRoles.ToList().AsReadOnly();
+
+        // Potential validation methods for role management
+        public Result UpdateName(string newName)
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+                return Result.Failure("Role name cannot be empty");
+
+            Name = newName;
+            LastModifiedAt = DateTime.UtcNow;
+            return Result.Success();
+        }
+
+        public Result Deactivate()
+        {
+            if (!IsActive)
+                return Result.Failure("Role is already inactive");
+
+            IsActive = false;
+            LastModifiedAt = DateTime.UtcNow;
+            return Result.Success();
+        }
+
+        public Result Activate()
+        {
+            if (IsActive)
+                return Result.Failure("Role is already active");
+
+            IsActive = true;
+            LastModifiedAt = DateTime.UtcNow;
+            return Result.Success();
+        }
     }
 }
