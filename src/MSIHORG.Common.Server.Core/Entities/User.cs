@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MSIHORG.Common.Server.Core.Entities
+﻿namespace MSIHORG.Common.Server.Core.Entities
 {
     public class User
     {
@@ -18,6 +12,8 @@ namespace MSIHORG.Common.Server.Core.Entities
         public DateTime? LastModifiedAt { get; set; }
         public bool IsEmailConfirmed { get; set; }
         public bool IsPhoneConfirmed { get; set; }
-        public List<string> Roles { get; set; } = new();
+
+        // Navigation properties
+        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }
