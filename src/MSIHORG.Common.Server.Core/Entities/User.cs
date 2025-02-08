@@ -1,14 +1,11 @@
 ﻿using MSIHORG.Common.Shared.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MSIHORG.Common.Server.Core.Entities
 {
     public class User
     {
+        private readonly HashSet<UserRole> _userRoles = new();
+
         public Guid Id { get; set; }
         public string Email { get; set; } = string.Empty;
         public string? PhoneNumber { get; set; }
@@ -20,9 +17,9 @@ namespace MSIHORG.Common.Server.Core.Entities
         public bool IsEmailConfirmed { get; set; }
         public bool IsPhoneConfirmed { get; set; }
 
-        // Public get, private set
-        private readonly HashSet<UserRole> _userRoles = new();
+        // Navigation property
         public virtual IReadOnlyCollection<UserRole> UserRoles => _userRoles.ToList().AsReadOnly();
+
 
 
         // Methods to manage the collection
@@ -39,6 +36,7 @@ namespace MSIHORG.Common.Server.Core.Entities
                 return Result.Failure("User cannot have more than 5 roles");
 
             _userRoles.Add(role);
+            LastModifiedAt = DateTime.UtcNow;
             return Result.Success();
         }
 
@@ -55,6 +53,7 @@ namespace MSIHORG.Common.Server.Core.Entities
                 return Result.Failure("Cannot remove the last admin role");
 
             _userRoles.Remove(existingRole);
+            LastModifiedAt = DateTime.UtcNow;
             return Result.Success();
         }
 
